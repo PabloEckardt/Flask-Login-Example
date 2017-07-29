@@ -12,8 +12,8 @@ class User(db.Model):
 
     # user model attributes
     id = db.Column(db.Integer, primary_key=True)
-    _password = db.Column('password', db.String(db.String(150)), nullable=False)
-
+    _password = db.Column('password', db.String(150), nullable=False)
+    account = db.Column(db.String(50), nullable=False)
 
     # Athentication functions
 
@@ -27,9 +27,9 @@ class User(db.Model):
         return self._password
 
     def check_password(self, password=None):
-        if self.password is None:
+        if self._password is None:
             return False
-        return check_password_hash(self.password, password)
+        return check_password_hash(self._password, password)
 
     # Required by flask-login
 
@@ -40,16 +40,12 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
+        return str(self.id)
 
-    def get_id(self):  # Primary key needs to be converted into unicode
-        return unicode(self.id)
+    def get_id(self):  # Primary key needs to be converted into unicode, string in python3
+        return str(self.id)
 
     # constructor
     def __init__(self, account, password):
         self.account = account
         self._set_password(password)
-
-class LoginForm(Form):
-    username = TextField('Username', [InputRequired()])
-    password = PasswordField('Password', [InputRequired()])

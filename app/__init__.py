@@ -16,4 +16,4 @@ db = SQLAlchemy(app)
 # This imports are necessary for the scope of the directory structure
 from app import views
 from app import models
-from views import *
+from app.views import *
